@@ -109,7 +109,7 @@ chai.Assertion.addMethod('listenOnce', function(){
 
 /* Stubs */
 
-var spark = function() {
+var sparkStub = function() {
   var obj = {
     on: sinon.stub(),
     once: sinon.stub(),
@@ -151,7 +151,7 @@ if (typeof window === "undefined") {
   module.exports = {
     chai: chai,
     sinon: sinon,
-    spark: spark
+    spark: sparkStub
   };
 }
 
