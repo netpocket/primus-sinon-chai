@@ -8,6 +8,7 @@ module.exports = function(grunt) {
           'package.json',
           'bower.json'
         ],
+        commitFiles: '-a',
         pushTo: 'origin'
       }
     }
