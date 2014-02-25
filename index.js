@@ -1,10 +1,11 @@
-var chai = require('chai'),
-    sinon = require('sinon'),
-    sinonChai = require('sinon-chai'),
-    _ = require('underscore')._;
+if (process) {
+  var chai = require('chai'),
+      sinon = require('sinon'),
+      sinonChai = require('sinon-chai'),
+      _ = require('underscore')._;
 
-chai.use(sinonChai);
-
+  chai.use(sinonChai);
+}
 
 
 /* Assert that it just wrote */
@@ -121,8 +122,11 @@ var spark = function() {
   return obj;
 };
 
-module.exports = {
-  chai: chai,
-  sinon: sinon,
-  spark: spark
-};
+if (process) {
+  module.exports = {
+    chai: chai,
+    sinon: sinon,
+    spark: spark
+  };
+}
+
