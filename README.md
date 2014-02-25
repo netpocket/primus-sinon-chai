@@ -1,15 +1,15 @@
 # primus-sinon-chai
 
 Provides additional assertions and stubs I use while
-testing realtime applications built using [Primus](https://github.com/primus/primus)
+testing realtime applications built on [Primus](https://github.com/primus/primus)
 
-## Install
+Works in the browser and node.js
+
+## Usage
+
+### nodejs setup
 
 `npm install --save-dev primus-sinon-chai`
-
-## Example
-
-### helper
 
 ```js
 var psc = require('primus-sinon-chai');
@@ -18,7 +18,20 @@ global.sinon = psc.sinon;
 global.sparkSpy = psc.spark;
 ```
 
-### tests
+### browser setup
+
+`bower install --save-dev primus-sinon-chai`
+
+```html
+<script src="bower_components/chai/chai.js"></script>
+<script src="bower_components/sinonjs-built/pkg/sinon.js"></script>
+<script src="bower_components/sinon-chai/lib/sinon-chai.js"></script>
+
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/primus-sinon-chai/index.js"></script>
+```
+
+### example tests
 
 ```js
 describe("communicate bridge", function() {
@@ -33,6 +46,10 @@ describe("communicate bridge", function() {
 
   it("does not listen to other browsers", function() {
     expect(bConnA.spark).not.to.listenOn('browser:2');
+  });
+
+  it("listens once for a special command", function() {
+    expect(bConnA.spark).to.listenOnce('look, ill only say this once');
   });
 
   it("works", function() {
