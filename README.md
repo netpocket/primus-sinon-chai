@@ -5,6 +5,9 @@ testing realtime applications built on [Primus](https://github.com/primus/primus
 
 Works in the browser and node.js
 
+For browser use, it expects you to have already loaded underscore (or
+lodash?), sinon, chai, sinon-chai
+
 ## Usage
 
 ### nodejs setup
@@ -15,7 +18,7 @@ Works in the browser and node.js
 var psc = require('primus-sinon-chai');
 global.expect = psc.chai.expect;
 global.sinon = psc.sinon;
-global.sparkSpy = psc.spark;
+global.sparkStub = psc.spark;
 ```
 
 ### browser setup
@@ -34,7 +37,18 @@ global.sparkSpy = psc.spark;
 ### example tests
 
 ```js
+var dConnA = null, bConnA = null;
+
 describe("communicate bridge", function() {
+  beforeEach(function() {
+    bConnA = {
+      spark: sparkStub()
+    };
+    dConnA = {
+      spark: sparkStub()
+    };
+  });
+
   it("listens to all connected devices", function() {
     expect(bConnA.spark).to.listenOn('device:1');
     expect(bConnA.spark).to.listenOn('device:2');
