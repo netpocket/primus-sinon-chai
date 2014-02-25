@@ -1,6 +1,6 @@
 {
   "name": "primus-sinon-chai",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "chai assertions and sinon stubs to help test primus programs",
   "main": "index.js",
   "scripts": {
