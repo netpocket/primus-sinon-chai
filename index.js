@@ -90,7 +90,7 @@ chai.Assertion.addMethod('listenOnce', function(){
   var test = null;
   var wasToldToListenOnce = function() {
     for (var i = 0, l = obj.once.callCount; i < l; i ++) {
-      var test = obj.on.getCall(i).args[0];
+      var test = obj.once.getCall(i).args[0];
       if (_.isEqual(test, args[0])) {
         return true;
       } 
