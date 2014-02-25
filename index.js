@@ -82,6 +82,31 @@ chai.Assertion.addMethod('listenOn', function(){
   );
 });
 
+
+/* Assert that an event emitter was told to listen with 'once' */
+chai.Assertion.addMethod('listenOnce', function(){
+  var obj = this._obj;
+  var args = Array.prototype.slice.call(arguments, 0);
+  var test = null;
+  var wasToldToListenOnce = function() {
+    for (var i = 0, l = obj.once.callCount; i < l; i ++) {
+      var test = obj.on.getCall(i).args[0];
+      if (_.isEqual(test, args[0])) {
+        return true;
+      } 
+    }
+    return false;
+  };
+  this.assert(
+    wasToldToListenOnce(args[0]),
+    "expected to be told to listen for #{exp} but wasn't",
+    "expected not to be told to listen for #{exp}, it was",
+    args[0],
+    test,
+    true
+  );
+});
+
 /* Stubs */
 
 var spark = function() {
