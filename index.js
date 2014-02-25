@@ -1,4 +1,4 @@
-if (process) {
+if (typeof window === "undefined") {
   var chai = require('chai'),
       sinon = require('sinon'),
       sinonChai = require('sinon-chai'),
@@ -147,7 +147,7 @@ var spark = function() {
   return obj;
 };
 
-if (process) {
+if (typeof window === "undefined") {
   module.exports = {
     chai: chai,
     sinon: sinon,
