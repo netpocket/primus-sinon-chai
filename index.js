@@ -22,6 +22,45 @@ chai.Assertion.addMethod('write', function(){
   );
 });
 
+/* Assert that it just wrote but when asserting about objects
+ * just make sure the content you asserted to exist exists --- 
+ * in other words don't fail if there's data there too that you
+ * didnt specifically assert about */
+chai.Assertion.addMethod('writeAtLeast', function(){
+  var obj = this._obj;
+  var args = Array.prototype.slice.call(arguments, 0);
+  var atLeastEqual = function(act, exp) {
+    for (var i = 0, l = act.length; i < l; i ++) {
+      var act_v = act[i];
+      var exp_v = exp[i];
+      if (_.isObject(exp_v)) {
+        if (_.isArray(exp_v)) {
+          /* the meat of this function is operating on objects
+           * it is designed to operate on an array already, so recurse */
+          if ( ! atLeastEqual(act_v, exp_v)) { return false; }
+        } else {
+          // check each property has at least what i am asserting about
+          for (var key in exp_v) {
+            if ( ! _.isEqual(act_v[key], exp_v[key])) { return false; }
+          }
+          _.matches(act_v, exp_v);
+        }
+      } else if (act_v !== exp_v) {
+        return false;
+      }
+    }
+    return true;
+  };
+  this.assert(
+    atLeastEqual(obj.write.getCall(obj.write.callCount-1).args[0].args, args),
+    "expected to write at least #{exp}, but wrote only #{act}",
+    "expected not to write at least #{act}",
+    args,
+    obj.write.getCall(0).args[0].args,
+    true
+  );
+});
+
 chai.Assertion.addProperty('writeOnce', function(){
   var act = this._obj.write.callCount;
   var exp = 1;
